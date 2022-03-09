@@ -1,14 +1,25 @@
 import Footer from './components/Footer';
-import styled from "styled-components"
 import AppRoutes from './components/AppRoutes';
+import { useDispatch } from 'react-redux';
+import { useAppSelector } from './hooks/reduxHooks';
+import { useEffect } from 'react';
+import { checkAuth } from './store/actions/auth';
+import Loader from './components/Loader/Loader';
 
-
-const Container = styled.div`
-width:100%;
-height:100vh;
-`
 
 const App = () => {
+
+  const dispatch = useDispatch()
+  const { isLoading } = useAppSelector(state => state.auth)
+
+  useEffect(() => {
+    dispatch(checkAuth())
+  }, [dispatch])
+
+  if (isLoading) {
+    return <div className="loading_centered"><Loader /></div>
+  }
+
   return (
     <>
       <AppRoutes />

@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { action } from "mobx"
 import { IAuthState } from "../../types/auth"
 import { IUser } from "../../types/models"
 import { checkAuth, login, registration } from "../actions/auth"
@@ -8,7 +7,8 @@ import { checkAuth, login, registration } from "../actions/auth"
 const initialState: IAuthState = {
     user: null,
     isLoading: true,
-    error: ""
+    error: "",
+    isAuth: false
 }
 
 
@@ -22,6 +22,7 @@ const authSlice = createSlice({
             state.user = null
             state.error = ""
             state.isLoading = false
+            state.isAuth = false
         }
     },
     extraReducers: {
@@ -29,6 +30,7 @@ const authSlice = createSlice({
             state.user = action.payload
             state.error = ""
             state.isLoading = false
+            state.isAuth = true
         },
         [registration.pending.type]: (state,) => {
             state.isLoading = true
@@ -36,6 +38,7 @@ const authSlice = createSlice({
         [registration.rejected.type]: (state) => {
             state.error = "User with this email already exist"
             state.isLoading = false
+            state.isAuth = false
         },
 
 
@@ -43,6 +46,7 @@ const authSlice = createSlice({
             state.user = action.payload
             state.isLoading = false
             state.error = ""
+            state.isAuth = true
         },
         [login.pending.type]: (state,) => {
             state.isLoading = true
@@ -50,6 +54,7 @@ const authSlice = createSlice({
         [login.rejected.type]: (state) => {
             state.error = "Wrong email or password"
             state.isLoading = false
+            state.isAuth = false
         },
 
 
@@ -57,6 +62,7 @@ const authSlice = createSlice({
             state.user = action.payload
             state.error = ""
             state.isLoading = false
+            state.isAuth = true
         },
         [checkAuth.pending.type]: (state) => {
             state.isLoading = true

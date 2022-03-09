@@ -4,6 +4,7 @@ import styled from "styled-components"
 import { useAppSelector } from '../hooks/reduxHooks';
 import { fetchProducts, } from '../store/actions/products';
 import { setProducts } from '../store/slices/productsSlice';
+import Loader from './Loader/Loader';
 import ProductsItem from './ProductsItem';
 
 const Container = styled.div`
@@ -20,11 +21,11 @@ interface IProductsProps {
 
 const Products: FC<IProductsProps> = ({ sort, color, category }) => {
     const dispatch = useDispatch()
-    const { products, } = useAppSelector(state => state.products)
+    const { products, isLoading } = useAppSelector(state => state.products)
 
     useEffect(() => {
         dispatch(fetchProducts({ category, color }))
-    }, [color,category,dispatch])
+    }, [color, category, dispatch])
 
 
     useEffect(() => {
@@ -34,9 +35,11 @@ const Products: FC<IProductsProps> = ({ sort, color, category }) => {
         if (sort === "desc") {
             dispatch(setProducts([...products].sort((a, b) => b.price - a.price)))
         }
-    }, [sort])
+    }, [sort, dispatch])
 
-
+    if (isLoading) {
+        return <div className="loading_centered"><Loader /></div>
+    }
 
     return (
         <Container>

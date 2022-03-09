@@ -5,6 +5,7 @@ export interface IAuthState {
     user: IUser | null
     isLoading: boolean
     error: string
+    isAuth: boolean
 }
 
 export enum AuthActionTypes {

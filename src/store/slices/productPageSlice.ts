@@ -29,7 +29,10 @@ const productPageSlice = createSlice({
             state.isLoading = false
             state.color = action.payload.color[0]
             state.size = action.payload.size[0]
-        }
+        },
+        [fetchOneProduct.pending.type]: (state) => {
+            state.isLoading = true
+        },
     }
 })
 

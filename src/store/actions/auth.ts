@@ -5,13 +5,13 @@ import { AuthActionTypes } from "../../types/auth";
 
 
 export const registration = createAsyncThunk(AuthActionTypes.REGISTRATION,
-    async (payload: { email: string, password: string }, thunkApi) => {
+    async (payload: { email: string, password: string, username: string }, thunkApi) => {
         try {
-            const data = await AuthService.register(payload.email, payload.password)
+            const data = await AuthService.register(payload.email, payload.password, payload.username)
             return data
 
         } catch (err) {
-            thunkApi.rejectWithValue("Ошибка при регистрации")
+            return thunkApi.rejectWithValue("Ошибка при регистрации")
         }
     })
 
@@ -23,7 +23,7 @@ export const login = createAsyncThunk(AuthActionTypes.LOGIN,
             return data
 
         } catch (err) {
-            thunkApi.rejectWithValue("Ошибка при регистрации")
+            return thunkApi.rejectWithValue("Ошибка при регистрации")
         }
     })
 
@@ -35,7 +35,7 @@ export const checkAuth = createAsyncThunk(AuthActionTypes.CHECK,
             return data
 
         } catch (err) {
-            thunkApi.rejectWithValue("Ошибка при регистрации")
+            return thunkApi.rejectWithValue("Ошибка при регистрации")
         }
     })
 

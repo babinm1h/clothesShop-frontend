@@ -20,6 +20,10 @@ const productsSlice = createSlice({
     extraReducers: {
         [fetchProducts.fulfilled.type]: (state, action: PayloadAction<IProduct[]>) => {
             state.products = action.payload
+            state.isLoading = false
+        },
+        [fetchProducts.pending.type]: (state) => {
+            state.isLoading = true
         }
     }
 })

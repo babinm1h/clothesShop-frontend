@@ -10,6 +10,7 @@ import { useAppSelector } from '../hooks/reduxHooks';
 import { fetchOneProduct } from '../store/actions/productPage';
 import { useParams } from 'react-router-dom';
 import { setColor, setSize } from '../store/slices/productPageSlice';
+import Loader from '../components/Loader/Loader';
 
 interface FilterColorProps {
     color: string
@@ -141,6 +142,10 @@ const ProductPage = () => {
 
     const handleSize = (e: React.ChangeEvent<HTMLSelectElement>) => {
         dispatch(setSize(e.target.value))
+    }
+
+    if (isLoading) {
+        return <div className="loading_centered"><Loader /></div>
     }
 
     return (

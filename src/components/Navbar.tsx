@@ -6,6 +6,9 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { mobile } from '../utils/responsive';
 import { NavLink } from 'react-router-dom';
 import { AllRoutes } from '../utils/routes';
+import { useAppSelector } from '../hooks/reduxHooks';
+import { useDispatch } from 'react-redux';
+import { logout } from '../store/slices/authSlice';
 
 
 const Container = styled.div`
@@ -71,7 +74,16 @@ const CartIcon = styled.span`
 color:black;
 `
 
+
+
 const Navbar = () => {
+    const { isAuth, user } = useAppSelector(state => state.auth)
+    const dispatch = useDispatch()
+
+    const handleLogout = () => {
+        dispatch(logout())
+    }
+
     return (
         <>
             <Container>
@@ -89,8 +101,15 @@ const Navbar = () => {
                     </Center>
 
                     <Right>
-                        <NavLink to={AllRoutes.SIGNIN}><MenuItem>SIGN IN </MenuItem></NavLink>
-                        <NavLink to={AllRoutes.REGISTER}><MenuItem>SIGN UP</MenuItem></NavLink>
+                        {isAuth
+                            ? <>
+                                <MenuItem>{user?.email}</MenuItem>
+                                <MenuItem onClick={handleLogout}>LOGOUT</MenuItem>
+                            </>
+                            : <>
+                                <NavLink to={AllRoutes.SIGNIN}><MenuItem>SIGN IN </MenuItem></NavLink>
+                                <NavLink to={AllRoutes.REGISTER}><MenuItem>SIGN UP</MenuItem></NavLink>
+                            </>}
                         <MenuItem>
                             <NavLink to={AllRoutes.CART}>
                                 <Badge badgeContent={4} color="primary">

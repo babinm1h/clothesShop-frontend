@@ -5,7 +5,6 @@ import Navbar from '../components/Navbar';
 import NewsLetter from '../components/NewsLetter';
 import Products from '../components/Products';
 import { allColors } from '../data';
-import { useAppSelector } from '../hooks/reduxHooks';
 import { mobile } from '../utils/responsive';
 
 
@@ -59,7 +58,6 @@ const ProductList = () => {
     const onChangeColor = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setColor(e.target.value)
     }
-
 
 
     return (

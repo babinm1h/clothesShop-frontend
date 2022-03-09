@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from "styled-components"
 import { mobile } from '../utils/responsive';
 import { useForm, SubmitHandler } from 'react-hook-form'
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { AllRoutes } from '../utils/routes';
+import { defaultValidation } from '../utils/valid';
+import { useDispatch } from 'react-redux';
+import { registration } from '../store/actions/auth';
+import { useAppSelector } from '../hooks/reduxHooks';
 
 
 const Container = styled.div`
@@ -29,13 +33,12 @@ margin-bottom:20px;
 `
 const Form = styled.form`
     display:flex;
-    flex-wrap:wrap;
+flex-direction:column;
 `
 const Input = styled.input`
     border:1px solid rgba(0,0,0,0.2);
     display:block;
     padding:7px;
-    margin-bottom:20px;
     width:40%;
     margin-right:10px;
     ${mobile({ width: `100%` })}
@@ -45,14 +48,18 @@ const Button = styled.button`
     width:40%;
     background-color:teal;
     color:white;
-    margin-bottom:20px;
+    margin-bottom:10px;
+    &:disabled{
+        background-color:#7ca8a8;
+        pointer-events:none;
+    }
 `
 const Agreement = styled.div`
 font-size:12px;
 margin-bottom:20px;
 line-height:1.5;
 `
-const Link = styled.p`
+const Link = styled.span`
 color:teal;
 cursor:pointer;
 &:hover{
@@ -63,6 +70,16 @@ cursor:pointer;
 const FormActions = styled.div`
 
 `
+const Error = styled.div`
+    color:red;
+    font-size:12px;
+`
+const InputContainer = styled.div`
+    display:flex;
+    align-items:center;
+    margin-bottom:20px;
+`
+
 
 
 interface IFormFields {
@@ -72,12 +89,26 @@ interface IFormFields {
 }
 
 const Registr = () => {
+    const { isAuth } = useAppSelector(state => state.auth)
 
-    const { register, handleSubmit } = useForm<IFormFields>()
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+
+    const { register, handleSubmit, reset, formState: { errors, isValid, isDirty, isSubmitting } } = useForm<IFormFields>({ mode: "onChange" })
 
     const onSubmit: SubmitHandler<IFormFields> = (data) => {
-        console.log(data);
+        dispatch(registration({ email: data.email, password: data.password, username: data.username }))
+        if (localStorage.getItem("token")) {
+            reset()
+        }
     }
+
+    useEffect(() => {
+        if (isAuth) {
+            navigate(AllRoutes.HOME)
+        }
+    }, [isAuth])
+
 
     return (
         <>
@@ -85,19 +116,37 @@ const Registr = () => {
                 <Wrapper>
                     <Title>CREATE AN ACCOUNT</Title>
                     <Form onSubmit={handleSubmit(onSubmit)}>
-                        <Input placeholder="Username" {...register("username")} />
-                        <Input placeholder="Email" {...register("username")} />
-                        <Input placeholder="Password" {...register("username")} />
+                        <InputContainer>
+                            <Input placeholder="Username"
+                                {...register("username", defaultValidation)} />
+                            {errors.username && <Error>{errors.username.message}</Error>}
+                        </InputContainer>
+
+                        <InputContainer>
+                            <Input placeholder="Email" type="email"
+                                {...register("email", defaultValidation)} />
+                            {errors.email && <Error>{errors.email.message}</Error>}
+                        </InputContainer>
+
+                        <InputContainer>
+                            <Input placeholder="Password"
+                                {...register("password", defaultValidation)} type="password" />
+                            {errors.password && <Error>{errors.password.message}</Error>}
+                        </InputContainer>
+
                         <FormActions>
                             <Agreement>
                                 By creating an account, I consent to the processing of my personal
                                 data in accordance with the PRIVACY POLICY.
                             </Agreement>
-                            <Button type="submit">CREATE</Button>
-                            <NavLink to={AllRoutes.SIGNIN}>
-                                <Link>Already have an accout?</Link>
-                            </NavLink>
+                            <Button type="submit"
+                                disabled={!isValid || !isDirty || isSubmitting}>
+                                CREATE
+                            </Button>
                         </FormActions>
+                        <NavLink to={AllRoutes.SIGNIN}>
+                            <Link>Already have an accout?</Link>
+                        </NavLink>
                     </Form>
                 </Wrapper>
             </Container>

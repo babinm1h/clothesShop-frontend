@@ -10,7 +10,7 @@ export const fetchProducts = createAsyncThunk(ProductsActionTypes.FETCH_PRODUCTS
             const data = await ProductsService.fetchProducts(payload.color, payload.category)
             return data
         } catch (err) {
-            thunkApi.rejectWithValue("Произошла ошибка")
+            return thunkApi.rejectWithValue("Произошла ошибка")
         }
     })
 
