@@ -7,7 +7,7 @@ import EmailIcon from '@mui/icons-material/Email';
 import PhoneIcon from '@mui/icons-material/Phone';
 import RoomIcon from '@mui/icons-material/Room';
 import { usefulLinks } from '../data';
-import { mobile } from '../responsive';
+import { mobile } from '../utils/responsive';
 
 
 interface SocialIconProps {

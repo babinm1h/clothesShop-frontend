@@ -1,6 +1,9 @@
 import React from 'react';
 import styled from "styled-components"
-import { mobile } from '../responsive';
+import { mobile } from '../utils/responsive';
+import { useForm, SubmitHandler } from 'react-hook-form'
+import { NavLink } from 'react-router-dom';
+import { AllRoutes } from '../utils/routes';
 
 
 const Container = styled.div`
@@ -61,28 +64,44 @@ const FormActions = styled.div`
 
 `
 
+
+interface IFormFields {
+    username: string
+    email: string
+    password: string
+}
+
 const Registr = () => {
+
+    const { register, handleSubmit } = useForm<IFormFields>()
+
+    const onSubmit: SubmitHandler<IFormFields> = (data) => {
+        console.log(data);
+    }
+
     return (
         <>
             <Container>
                 <Wrapper>
                     <Title>CREATE AN ACCOUNT</Title>
-                    <Form>
-                        <Input placeholder="Name" />
-                        <Input placeholder="Username" />
-                        <Input placeholder="Email" />
-                        <Input placeholder="Password" />
+                    <Form onSubmit={handleSubmit(onSubmit)}>
+                        <Input placeholder="Username" {...register("username")} />
+                        <Input placeholder="Email" {...register("username")} />
+                        <Input placeholder="Password" {...register("username")} />
                         <FormActions>
                             <Agreement>
                                 By creating an account, I consent to the processing of my personal
                                 data in accordance with the PRIVACY POLICY.
                             </Agreement>
-                            <Button>CREATE</Button>
-                            <Link>Already have an accout?</Link>
+                            <Button type="submit">CREATE</Button>
+                            <NavLink to={AllRoutes.SIGNIN}>
+                                <Link>Already have an accout?</Link>
+                            </NavLink>
                         </FormActions>
                     </Form>
                 </Wrapper>
             </Container>
+
         </>
     );
 };

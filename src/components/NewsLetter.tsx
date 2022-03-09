@@ -2,7 +2,7 @@ import React from 'react';
 import styled from "styled-components"
 import SendIcon from '@mui/icons-material/Send';
 import Send from '@mui/icons-material/Send';
-import { mobile } from '../responsive';
+import { mobile } from '../utils/responsive';
 
 
 const Container = styled.div`

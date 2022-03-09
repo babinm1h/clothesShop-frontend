@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useParams } from 'react-router';
 import styled from "styled-components"
 import Navbar from '../components/Navbar';
 import NewsLetter from '../components/NewsLetter';
 import Products from '../components/Products';
-import { mobile } from '../responsive';
+import { allColors } from '../data';
+import { useAppSelector } from '../hooks/reduxHooks';
+import { mobile } from '../utils/responsive';
 
 
 const Container = styled.div`
@@ -12,6 +15,7 @@ padding:20px;
 const Title = styled.h1`
     font-weight:bold;
     font-size:27px;
+    text-transform:capitalize;
 `
 const FilterContainer = styled.div`
     display:flex;
@@ -43,41 +47,47 @@ const Option = styled.option`
 
 
 const ProductList = () => {
+    const { category } = useParams() as { category: string }
+
+    const [sort, setSort] = useState<string | undefined>(undefined)
+    const [color, setColor] = useState<string | undefined>(undefined)
+
+    const onSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setSort(e.target.value)
+    }
+
+    const onChangeColor = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setColor(e.target.value)
+    }
+
+
 
     return (
         <>
             <Navbar />
             <Container>
-                <Title>Dresses</Title>
+                <Title>{category}</Title>
                 <FilterContainer>
                     <Filter>
                         <FilterText>Filter Products:</FilterText>
-                        <Select>
-                            <Option selected disabled>Color</Option>
-                            <Option>Green</Option>
-                            <Option>Yellow</Option>
-                            <Option>Black</Option>
-                        </Select>
-                        <Select>
-                            <Option selected disabled>Size</Option>
-                            <Option>S</Option>
-                            <Option>M</Option>
-                            <Option>L</Option>
+                        <Select defaultValue="" onChange={onChangeColor}>
+                            <Option value="">Any</Option>
+                            {allColors.map(c => <Option value={c} key={c}>{c}</Option>)}
                         </Select>
                     </Filter>
 
 
                     <Filter>
                         <FilterText>Sort Products:</FilterText>
-                        <Select>
-                            <Option>Newest</Option>
-                            <Option>Price (ASCending)</Option>
-                            <Option>Price (DESCending)</Option>
+                        <Select onChange={onSortChange} defaultValue="sortBy">
+                            <Option value="sortBy" disabled>Sort</Option>
+                            <Option value="asc">Price (ASCending)</Option>
+                            <Option value="desc">Price (DESCending)</Option>
                         </Select>
                     </Filter>
                 </FilterContainer>
             </Container>
-            <Products />
+            <Products sort={sort} color={color} category={category} />
             <NewsLetter />
         </>
     );

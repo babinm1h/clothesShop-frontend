@@ -1,11 +1,6 @@
 import Footer from './components/Footer';
-import Navbar from './components/Navbar';
-import Registr from './pages/Registr';
 import styled from "styled-components"
-import SignIn from './pages/SignIn';
-import Cart from './pages/Cart';
-import ProductList from './pages/ProductList';
-import ProductPage from './pages/ProductPage';
+import AppRoutes from './components/AppRoutes';
 
 
 const Container = styled.div`
@@ -16,7 +11,7 @@ height:100vh;
 const App = () => {
   return (
     <>
-      <Cart />
+      <AppRoutes />
       <Footer />
     </>
   );

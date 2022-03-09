@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { FC, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import styled from "styled-components"
-import { popularProducts } from '../data';
+import { useAppSelector } from '../hooks/reduxHooks';
+import { fetchProducts, } from '../store/actions/products';
+import { setProducts } from '../store/slices/productsSlice';
 import ProductsItem from './ProductsItem';
 
 const Container = styled.div`
@@ -9,11 +12,35 @@ const Container = styled.div`
     flex-wrap:wrap;
     justify-content:space-between;
 `
+interface IProductsProps {
+    sort?: string
+    color?: string
+    category?: string
+}
 
-const Products = () => {
+const Products: FC<IProductsProps> = ({ sort, color, category }) => {
+    const dispatch = useDispatch()
+    const { products, } = useAppSelector(state => state.products)
+
+    useEffect(() => {
+        dispatch(fetchProducts({ category, color }))
+    }, [color,category,dispatch])
+
+
+    useEffect(() => {
+        if (sort === "asc") {
+            dispatch(setProducts([...products].sort((a, b) => a.price - b.price)))
+        }
+        if (sort === "desc") {
+            dispatch(setProducts([...products].sort((a, b) => b.price - a.price)))
+        }
+    }, [sort])
+
+
+
     return (
         <Container>
-            {popularProducts.map(p => <ProductsItem item={p} key={p.id} />)}
+            {products.map(p => <ProductsItem item={p} key={p._id} />)}
         </Container>
     );
 };

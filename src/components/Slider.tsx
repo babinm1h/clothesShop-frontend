@@ -4,7 +4,8 @@ import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import { sliderItems } from '../data';
 import { NavLink } from 'react-router-dom';
-import { mobile } from '../responsive';
+import { mobile } from '../utils/responsive';
+import { AllRoutes } from '../utils/routes';
 
 interface ArrowProps {
     direction: string
@@ -125,9 +126,11 @@ const Slider = () => {
                             <Descr>
                                 {s.desc}
                             </Descr>
-                            <Button>
-                                SHOW NOW
-                            </Button>
+                            <NavLink to={AllRoutes.PRODUCTS}>
+                                <Button>
+                                    SHOW NOW
+                                </Button>
+                            </NavLink>
                         </InfoContainer>
                     </Slide>)}
                 </Wrapper>

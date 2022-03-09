@@ -3,7 +3,9 @@ import styled from "styled-components"
 import SearchIcon from '@mui/icons-material/Search';
 import { Badge } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { mobile } from '../responsive';
+import { mobile } from '../utils/responsive';
+import { NavLink } from 'react-router-dom';
+import { AllRoutes } from '../utils/routes';
 
 
 const Container = styled.div`
@@ -42,6 +44,7 @@ const Logo = styled.h1`
 font-weight:bold ;
 font-size:24px;
 text-align:center;
+color:black;
 `
 
 const Center = styled.div`
@@ -58,9 +61,15 @@ const MenuItem = styled.div`
    cursor:pointer; 
    margin-left:25px;
    white-space:nowrap;
+   color:black;
+   &:hover{
+       text-decoration:underline;
+   }
    ${mobile({ fontSize: `12px`, marginLeft: `12px` })}
 `
-
+const CartIcon = styled.span`
+color:black;
+`
 
 const Navbar = () => {
     return (
@@ -76,16 +85,18 @@ const Navbar = () => {
                     </Left>
 
                     <Center>
-                        <Logo>QUEISSO</Logo>
+                        <NavLink to={AllRoutes.HOME}><Logo>QUEISSO</Logo></NavLink>
                     </Center>
 
                     <Right>
-                        <MenuItem>SIGN IN</MenuItem>
-                        <MenuItem>SIGN UP</MenuItem>
+                        <NavLink to={AllRoutes.SIGNIN}><MenuItem>SIGN IN </MenuItem></NavLink>
+                        <NavLink to={AllRoutes.REGISTER}><MenuItem>SIGN UP</MenuItem></NavLink>
                         <MenuItem>
-                            <Badge badgeContent={4} color="primary">
-                                <ShoppingCartIcon fontSize="medium" />
-                            </Badge>
+                            <NavLink to={AllRoutes.CART}>
+                                <Badge badgeContent={4} color="primary">
+                                    <CartIcon><ShoppingCartIcon fontSize="medium" /></CartIcon>
+                                </Badge>
+                            </NavLink>
                         </MenuItem>
                     </Right>
                 </Wrapper>

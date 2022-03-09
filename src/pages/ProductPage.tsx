@@ -1,14 +1,21 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from "styled-components"
 import NewsLetter from '../components/NewsLetter';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import Navbar from '../components/Navbar';
-import { mobile } from '../responsive';
+import { mobile } from '../utils/responsive';
+import { useDispatch } from 'react-redux';
+import { useAppSelector } from '../hooks/reduxHooks';
+import { fetchOneProduct } from '../store/actions/productPage';
+import { useParams } from 'react-router-dom';
+import { setColor, setSize } from '../store/slices/productPageSlice';
 
 interface FilterColorProps {
     color: string
+    active?: boolean
 }
+
 
 const Container = styled.div`
     margin-top:50px;
@@ -66,15 +73,14 @@ const FilterColor = styled.div<FilterColorProps>`
     background-color:${props => props.color};
     margin-right:10px;
     cursor:pointer;
+    border:${props => props.active ? `1px solid rgba(0,0,0,1)` : `1px solid rgba(0,0,0,0.3)`}
 `
 const FilterSize = styled.select`
     padding:5px;
     cursor:pointer;
     font-size:16px;
 `
-const FilterOption = styled.option`
-    
-`
+const FilterOption = styled.option``
 
 
 const AddContainer = styled.div`
@@ -110,6 +116,33 @@ const Button = styled.option`
 `
 
 const ProductPage = () => {
+    const dispatch = useDispatch()
+    const { product, isLoading, color, size } = useAppSelector(state => state.productPage)
+    const [quan, setQuan] = useState<number>(1)
+
+    const { id } = useParams() as { id: string }
+
+    useEffect(() => {
+        if (id) dispatch(fetchOneProduct(id))
+    }, [id, dispatch])
+
+    const handleDecr = () => {
+        if (quan !== 1) {
+            setQuan(quan - 1)
+        }
+    }
+    const handleIncr = () => {
+        setQuan(quan + 1)
+    }
+
+    const handleColor = (color: string) => {
+        dispatch(setColor(color))
+    }
+
+    const handleSize = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        dispatch(setSize(e.target.value))
+    }
+
     return (
         <>
             <Navbar />
@@ -117,38 +150,39 @@ const ProductPage = () => {
 
                 <Wrapper>
                     <ImageContainer>
-                        <Image src="https://www.prada.com/content/dam/pradanux_products/U/UCS/UCS319/1YOTF010O/UCS319_1YOT_F010O_S_182_SLF.png" />
+                        <Image src={product.img} />
                     </ImageContainer>
                     <InfoContainer>
-                        <Title>Some Shirt</Title>
+                        <Title>{product.title}</Title>
                         <Descr>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sint aspernatur eos veritatis asperiores voluptatibus, neque fugit itaque, optio saepe, esse odio quas!
+                            {product.descr}
                         </Descr>
-                        <Price>20 $</Price>
+                        <Price>{product.price} $</Price>
 
                         <FilterContainer>
                             <Filter>
                                 <FilterTitle>Color</FilterTitle>
-                                <FilterColor color="black" />
-                                <FilterColor color="yellow" />
-                                <FilterColor color="green" />
+                                {product?.color?.map(c => <FilterColor color={c}
+                                    key={c} onClick={() => handleColor(c)}
+                                    active={color === c} />)}
                             </Filter>
                             <Filter>
                                 <FilterTitle>Size</FilterTitle>
-                                <FilterSize>
-                                    <FilterOption selected disabled>Sizes</FilterOption>
-                                    <FilterOption>S</FilterOption>
-                                    <FilterOption>M</FilterOption>
-                                    <FilterOption>L</FilterOption>
+                                <FilterSize defaultValue={size} onChange={handleSize}>
+                                    {product?.size?.map(s => <FilterOption key={s} value={s}>
+                                        {s}
+                                    </FilterOption>)}
                                 </FilterSize>
                             </Filter>
                         </FilterContainer>
 
                         <AddContainer>
                             <AmountContainer>
-                                <RemoveIcon />
-                                <Amount>1</Amount>
-                                <AddIcon />
+                                <button onClick={handleDecr}><RemoveIcon cursor="pointer" /></button>
+                                <Amount>{quan}</Amount>
+                                <button onClick={handleIncr}>
+                                    <AddIcon cursor="pointer" />
+                                </button>
                             </AmountContainer>
                             <Button>ADD TO CART</Button>
                         </AddContainer>

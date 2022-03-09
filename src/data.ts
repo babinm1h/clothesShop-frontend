@@ -1,3 +1,5 @@
+import { ICategory } from "./types/dataItems";
+
 export const sliderItems = [
     {
         id: 1,
@@ -23,21 +25,24 @@ export const sliderItems = [
 ];
 
 
-export const categories = [
+export const categories: ICategory[] = [
     {
         id: 1,
         img: "https://images.pexels.com/photos/5886041/pexels-photo-5886041.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-        title: "SHIRT STYLE!",
+        title: "MAN",
+        categ: "man"
     },
     {
         id: 2,
         img: "https://images.pexels.com/photos/2983464/pexels-photo-2983464.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-        title: "LOUNGEWEAR LOVE",
+        title: "WOMAN",
+        categ: "woman"
     },
     {
         id: 3,
         img: "https://images.pexels.com/photos/5480696/pexels-photo-5480696.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
-        title: "LIGHT JACKETS",
+        title: "LIGHT COATS",
+        categ: "coat"
     },
 ];
 
@@ -82,4 +87,9 @@ export const usefulLinks = [
     { id: 2, title: "Shop" },
     { id: 3, title: "Summer sale" },
     { id: 4, title: "Fashion" },
+]
+
+
+export const allColors = [
+    "red", "green", "blue", "black", "white", "yellow", "orange", "pink", "brown", "gray"
 ]

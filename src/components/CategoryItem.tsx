@@ -1,7 +1,9 @@
 import React, { FC } from 'react';
 import styled from 'styled-components'
-import { mobile } from '../responsive';
+import { mobile } from '../utils/responsive';
 import { ICategory } from '../types/dataItems';
+import { NavLink } from 'react-router-dom';
+import { AllRoutes } from '../utils/routes';
 
 const Container = styled.div`
     flex:1;
@@ -51,7 +53,9 @@ const CategoryItem: FC<ICategoryItemProps> = ({ item }) => {
             <Image src={item.img} />
             <Info>
                 <Title>{item.title}</Title>
-                <Button>SHOP NOW</Button>
+                <NavLink to={AllRoutes.PRODUCTS + `/${item.categ}`}>
+                    <Button>SHOP NOW</Button>
+                </NavLink>
             </Info>
         </Container>
     );

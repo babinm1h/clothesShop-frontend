@@ -3,7 +3,7 @@ import styled from "styled-components"
 import Navbar from '../components/Navbar';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
-import { mobile } from '../responsive';
+import { mobile } from '../utils/responsive';
 
 interface TopButtonProps {
     color: string
