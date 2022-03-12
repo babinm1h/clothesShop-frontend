@@ -19,3 +19,11 @@ export interface IUser {
     email: string
     id: string
 }
+
+
+export interface ICartProduct {
+    _id: string
+    product: IProduct
+    quan: number
+    selectedColor: string
+}

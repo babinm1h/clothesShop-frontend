@@ -98,9 +98,7 @@ const Registr = () => {
 
     const onSubmit: SubmitHandler<IFormFields> = (data) => {
         dispatch(registration({ email: data.email, password: data.password, username: data.username }))
-        if (localStorage.getItem("token")) {
             reset()
-        }
     }
 
     useEffect(() => {

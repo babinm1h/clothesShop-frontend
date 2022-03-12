@@ -80,7 +80,7 @@ interface IFormFields {
 }
 
 const SignIn = () => {
-    const { isAuth, user } = useAppSelector(state => state.auth)
+    const { isAuth,} = useAppSelector(state => state.auth)
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -96,7 +96,6 @@ const SignIn = () => {
     useEffect(() => {
         if (isAuth) {
             navigate(AllRoutes.HOME)
-            console.log(user);
         }
     }, [isAuth])
 

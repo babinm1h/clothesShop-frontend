@@ -78,6 +78,7 @@ color:black;
 
 const Navbar = () => {
     const { isAuth, user } = useAppSelector(state => state.auth)
+    const totalCount = useAppSelector(state => state.cart.totalCount)
     const dispatch = useDispatch()
 
     const handleLogout = () => {
@@ -112,7 +113,7 @@ const Navbar = () => {
                             </>}
                         <MenuItem>
                             <NavLink to={AllRoutes.CART}>
-                                <Badge badgeContent={4} color="primary">
+                                <Badge badgeContent={totalCount} color="primary">
                                     <CartIcon><ShoppingCartIcon fontSize="medium" /></CartIcon>
                                 </Badge>
                             </NavLink>

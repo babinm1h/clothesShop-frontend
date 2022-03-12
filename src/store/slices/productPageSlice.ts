@@ -8,7 +8,7 @@ const initialState: IProductPageState = {
     product: {} as IProduct,
     isLoading: false,
     color: "",
-    size: ""
+    size: "",
 }
 
 
@@ -32,6 +32,9 @@ const productPageSlice = createSlice({
         },
         [fetchOneProduct.pending.type]: (state) => {
             state.isLoading = true
+        },
+        [fetchOneProduct.rejected.type]: (state) => {
+            state.isLoading = false
         },
     }
 })

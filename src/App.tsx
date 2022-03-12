@@ -5,6 +5,7 @@ import { useAppSelector } from './hooks/reduxHooks';
 import { useEffect } from 'react';
 import { checkAuth } from './store/actions/auth';
 import Loader from './components/Loader/Loader';
+import { getCart } from './store/actions/cart';
 
 
 const App = () => {
@@ -14,6 +15,7 @@ const App = () => {
 
   useEffect(() => {
     dispatch(checkAuth())
+    dispatch(getCart())
   }, [dispatch])
 
   if (isLoading) {

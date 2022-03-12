@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
 import styled from "styled-components"
-import { IPopularProduct } from '../types/dataItems';
 import SearchIcon from '@mui/icons-material/Search';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
@@ -90,6 +89,7 @@ interface IProductsItemProps {
 }
 
 const ProductsItem: FC<IProductsItemProps> = ({ item }) => {
+
     return (
         <Container>
             <Image src={item.img} />

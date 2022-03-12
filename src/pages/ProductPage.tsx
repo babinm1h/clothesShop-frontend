@@ -11,6 +11,7 @@ import { fetchOneProduct } from '../store/actions/productPage';
 import { useParams } from 'react-router-dom';
 import { setColor, setSize } from '../store/slices/productPageSlice';
 import Loader from '../components/Loader/Loader';
+import { addToCart } from '../store/actions/cart';
 
 interface FilterColorProps {
     color: string
@@ -106,7 +107,7 @@ const Amount = styled.div`
     border:1px solid teal;
     border-radius:10px;
 `
-const Button = styled.option`
+const Button = styled.button`
     cursor:pointer;
     border:1px solid teal;
     padding:10px 15px;
@@ -114,11 +115,18 @@ const Button = styled.option`
     &:hover{
         text-decoration:underline;
     }
+    &:disabled{
+        background-color:#ccc;
+        color:teal;
+        cursor:wait;
+    }
 `
 
 const ProductPage = () => {
     const dispatch = useDispatch()
     const { product, isLoading, color, size } = useAppSelector(state => state.productPage)
+    const isAdding = useAppSelector(state => state.cart.isAdding)
+
     const [quan, setQuan] = useState<number>(1)
 
     const { id } = useParams() as { id: string }
@@ -146,6 +154,11 @@ const ProductPage = () => {
 
     if (isLoading) {
         return <div className="loading_centered"><Loader /></div>
+    }
+
+
+    const handleAddToCart = () => {
+        dispatch(addToCart({ selectedColor: color, id, quan }))
     }
 
     return (
@@ -189,7 +202,9 @@ const ProductPage = () => {
                                     <AddIcon cursor="pointer" />
                                 </button>
                             </AmountContainer>
-                            <Button>ADD TO CART</Button>
+                            <Button onClick={handleAddToCart} disabled={isAdding}>
+                                ADD TO CART
+                            </Button>
                         </AddContainer>
                     </InfoContainer>
                 </Wrapper>
