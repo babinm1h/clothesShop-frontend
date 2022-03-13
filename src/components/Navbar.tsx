@@ -82,7 +82,7 @@ const Navbar = () => {
     const dispatch = useDispatch()
 
     const handleLogout = () => {
-        dispatch(logout())
+        if (window.confirm("Logout?")) dispatch(logout())
     }
 
     useEffect(() => {
@@ -108,7 +108,9 @@ const Navbar = () => {
                     <Right>
                         {isAuth
                             ? <>
-                                <MenuItem>{user?.email}</MenuItem>
+                                <NavLink to={AllRoutes.ORDERS}>
+                                    <MenuItem>{user?.email}</MenuItem>
+                                </NavLink>
                                 <MenuItem onClick={handleLogout}>LOGOUT</MenuItem>
                                 <MenuItem>
                                     <NavLink to={AllRoutes.CART}>

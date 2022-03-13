@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from "styled-components"
 import Navbar from '../components/Navbar';
 import { mobile } from '../utils/responsive';
@@ -9,6 +9,10 @@ import CartProduct from '../components/CartProduct';
 import Loader from '../components/Loader/Loader';
 import { useNavigate } from 'react-router';
 import { AllRoutes } from '../utils/routes';
+import StripeCheckout, { Token } from 'react-stripe-checkout';
+import { STRIPE_PUB_KEY } from '../data';
+import { OrdersService } from '../API/ordersService';
+
 
 interface TopButtonProps {
     color: string
@@ -77,8 +81,9 @@ const SummaryPrice = styled.div`
 margin:20px 0;
 `
 const Button = styled.button`
-padding:10px;
+padding:10px 15px;
 background-color:black;
+font-size:16px;
 color:white;
 ${mobile({ width: `100%` })}
 &:hover{
@@ -101,6 +106,12 @@ const Cart = () => {
     const { isLoading, products, totalCount, totalPrice } = useAppSelector(state => state.cart)
     const navigate = useNavigate()
 
+    const [stripeToken, setStripeToken] = useState<null | Token>(null)
+
+    const onToken = (token: Token) => {
+        setStripeToken(token)
+    }
+
     useEffect(() => {
         dispatch(getCart())
     }, [])
@@ -108,6 +119,21 @@ const Cart = () => {
     const handleContinue = () => {
         navigate(AllRoutes.PRODUCTS)
     }
+
+
+    const stripeRequest = async () => {
+        if (stripeToken) {
+            const data = await OrdersService.stripe(stripeToken.id, totalPrice)
+            navigate(AllRoutes.SUCCESS, {
+                state: { stripeData: data, products: products.map(p => p._id) }
+            })
+            console.log(data);
+        }
+    }
+
+    useEffect(() => {
+        stripeToken && stripeRequest()
+    }, [stripeToken])
 
     return (
         <>
@@ -142,7 +168,16 @@ const Cart = () => {
                                 <SummaryItemTitle>Total Count</SummaryItemTitle>
                                 <SummaryPrice>{totalCount}</SummaryPrice>
                             </SummaryItem>
-                            <Button>CHECKOUT NOW</Button>
+
+                            <StripeCheckout stripeKey={STRIPE_PUB_KEY} name="QUEISSO"
+                                amount={totalPrice * 100} token={onToken}
+                                image="https://yt3.ggpht.com/ytc/AKedOLR17i2DSAEb0c58ZPZkBAoXu-Ie-3lAjPn4bDKr=s900-c-k-c0x00ffffff-no-rj"
+                                description='Order Payment'
+                                shippingAddress
+                                billingAddress>
+                                <Button>CHECKOUT NOW</Button>
+                            </StripeCheckout>
+
                         </Summary>
                     </Bottom>}
             </Container>

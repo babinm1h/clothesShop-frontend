@@ -77,6 +77,7 @@ font-size:22px;
 const Remove = styled.button`
     color:red;
     margin-right:10px;
+    background-color:white;
 `
 
 interface ICartProductProps {

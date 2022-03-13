@@ -27,3 +27,21 @@ export interface ICartProduct {
     quan: number
     selectedColor: string
 }
+
+
+
+export interface IAddress {
+    city: string
+    country: string
+    line1: string
+}
+
+
+export interface IOrder {
+    _id: string
+    products: ICartProduct[]
+    amount: number
+    status: string
+    address:IAddress
+}
+

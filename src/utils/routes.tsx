@@ -1,10 +1,12 @@
 import React from "react";
 import Cart from "../pages/Cart";
 import Home from "../pages/Home";
+import Orders from "../pages/Orders";
 import ProductList from "../pages/ProductList";
 import ProductPage from "../pages/ProductPage";
 import Registr from "../pages/Registr";
 import SignIn from "../pages/SignIn";
+import Success from "../pages/Success";
 
 interface IRoute {
     path: string,
@@ -18,7 +20,9 @@ export enum AllRoutes {
     REGISTER = "/register",
     CART = '/cart',
     ANY = '/*',
-    PRODUCT = "/product"
+    PRODUCT = "/product",
+    SUCCESS = "/success",
+    ORDERS = "/orders"
 }
 
 export const publicRoutes: IRoute[] = [
@@ -32,5 +36,7 @@ export const publicRoutes: IRoute[] = [
 ]
 
 export const authRoutes: IRoute[] = [
-    { path: AllRoutes.CART, element: <Cart /> }
+    { path: AllRoutes.CART, element: <Cart /> },
+    { path: AllRoutes.SUCCESS, element: <Success /> },
+    { path: AllRoutes.ORDERS, element: <Orders /> }
 ]

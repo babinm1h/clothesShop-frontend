@@ -93,3 +93,7 @@ export const usefulLinks = [
 export const allColors = [
     "red", "green", "blue", "black", "white", "yellow", "orange", "pink", "brown", "gray"
 ]
+
+
+export const STRIPE_PUB_KEY =
+    'pk_test_51KcmG4CtpeWVakDSE17pPB2HJX62Ey3iijuxn5k7psr74Zi42RVKo5SA9bXjHCnEKlDitrFaFWPNgedDIYkk36m4007Dgu6Cy5'
