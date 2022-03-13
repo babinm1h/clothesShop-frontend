@@ -58,7 +58,7 @@ const ProductSize = styled.div`
 const Image = styled.img`
 width:200px;
 margin-right:10px;
-height:220px;
+height:250px;
 object-fit:cover;
 `
 const ProductAmountContainer = styled.div`
@@ -96,7 +96,9 @@ const CartProduct: FC<ICartProductProps> = ({ item }) => {
     }
 
     const handleRemoveOne = () => {
-        dispatch(removeOne(item._id))
+        if (item.quan > 1) {
+            dispatch(removeOne(item._id))
+        }
     }
 
     return (
@@ -126,7 +128,7 @@ const CartProduct: FC<ICartProductProps> = ({ item }) => {
                         <RemoveIcon cursor="pointer" />
                     </button>
                 </ProductAmountContainer>
-                <ProductPrice>$ {item.product.price}</ProductPrice>
+                <ProductPrice>$ {item.product.price * item.quan}</ProductPrice>
             </PriceDetail>
             <Remove onClick={handleRemove} disabled={isRemoving}>
                 <DeleteIcon fontSize="medium" />

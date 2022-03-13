@@ -9,6 +9,7 @@ const initialState: IProductPageState = {
     isLoading: false,
     color: "",
     size: "",
+    quan: 1,
 }
 
 
@@ -21,6 +22,15 @@ const productPageSlice = createSlice({
         },
         setSize(state, action: PayloadAction<string>) {
             state.size = action.payload
+        },
+        incrQuan(state) {
+            state.quan += 1
+        },
+        decrQuan(state) {
+            state.quan -= 1
+        },
+        setQuan(state, action: PayloadAction<number>) {
+            state.quan = action.payload
         }
     },
     extraReducers: {
@@ -42,4 +52,4 @@ const productPageSlice = createSlice({
 
 export default productPageSlice.reducer
 
-export const { setColor, setSize } = productPageSlice.actions
+export const { setColor, setSize, decrQuan, incrQuan, setQuan } = productPageSlice.actions

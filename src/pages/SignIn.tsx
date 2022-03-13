@@ -46,7 +46,7 @@ const Button = styled.button`
     width:40%;
     background-color:teal;
     color:white;
-    margin-bottom:20px;
+    margin:10px 0;
     &:hover{
         background-color:teal; 
     }
@@ -80,7 +80,7 @@ interface IFormFields {
 }
 
 const SignIn = () => {
-    const { isAuth,} = useAppSelector(state => state.auth)
+    const { isAuth, loginError } = useAppSelector(state => state.auth)
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -118,6 +118,8 @@ const SignIn = () => {
                                 {...register("password", defaultValidation)} type="password" />
                             {errors.password && <Error>{errors.password.message}</Error>}
                         </InputContainer>
+
+                        {loginError && <Error>{loginError}</Error>}
 
                         <Button disabled={!isDirty || isSubmitting || !isValid}>SIGN IN</Button>
                         <NavLink to={AllRoutes.REGISTER}>

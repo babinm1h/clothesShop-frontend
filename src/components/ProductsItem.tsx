@@ -37,9 +37,8 @@ const Info = styled.div`
    cursor:pointer;
 `
 const Container = styled.div`
-   flex:1;
    margin:5px;
-   min-width:300px;
+   flex:0 0 300px;
    height:350px; 
    display:flex;
    align-items:center;

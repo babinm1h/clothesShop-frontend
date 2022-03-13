@@ -9,7 +9,7 @@ import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../hooks/reduxHooks';
 import { fetchOneProduct } from '../store/actions/productPage';
 import { useParams } from 'react-router-dom';
-import { setColor, setSize } from '../store/slices/productPageSlice';
+import { decrQuan, incrQuan, setColor, setQuan, setSize } from '../store/slices/productPageSlice';
 import Loader from '../components/Loader/Loader';
 import { addToCart } from '../store/actions/cart';
 
@@ -124,10 +124,9 @@ const Button = styled.button`
 
 const ProductPage = () => {
     const dispatch = useDispatch()
-    const { product, isLoading, color, size } = useAppSelector(state => state.productPage)
+    const { product, isLoading, color, size, quan } = useAppSelector(state => state.productPage)
     const isAdding = useAppSelector(state => state.cart.isAdding)
 
-    const [quan, setQuan] = useState<number>(1)
 
     const { id } = useParams() as { id: string }
 
@@ -137,11 +136,11 @@ const ProductPage = () => {
 
     const handleDecr = () => {
         if (quan !== 1) {
-            setQuan(quan - 1)
+            dispatch(decrQuan())
         }
     }
     const handleIncr = () => {
-        setQuan(quan + 1)
+        dispatch(incrQuan())
     }
 
     const handleColor = (color: string) => {
@@ -159,6 +158,7 @@ const ProductPage = () => {
 
     const handleAddToCart = () => {
         dispatch(addToCart({ selectedColor: color, id, quan }))
+        dispatch(setQuan(1))
     }
 
     return (

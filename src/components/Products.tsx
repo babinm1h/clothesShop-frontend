@@ -11,8 +11,14 @@ const Container = styled.div`
     padding:20px;
     display:flex;
     flex-wrap:wrap;
-    justify-content:space-between;
 `
+const Empty = styled.h2`
+    font-size:20px;
+    font-weight:bold;
+    text-align:center;
+    margin-top:50px;
+`
+
 interface IProductsProps {
     sort?: string
     color?: string
@@ -39,6 +45,10 @@ const Products: FC<IProductsProps> = ({ sort, color, category }) => {
 
     if (isLoading) {
         return <div className="loading_centered"><Loader /></div>
+    }
+
+    if (products.length === 0) {
+        return <Empty>Products not found, try to remove filters :(</Empty>
     }
 
     return (

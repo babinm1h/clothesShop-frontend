@@ -6,7 +6,8 @@ export interface IProductPageState {
     isLoading: boolean
     product: IProduct
     color: string
-    size: string
+    size: string,
+    quan: number
 }
 
 

@@ -48,7 +48,7 @@ const Button = styled.button`
     width:40%;
     background-color:teal;
     color:white;
-    margin-bottom:10px;
+    margin:10px 0;
     &:disabled{
         background-color:#7ca8a8;
         pointer-events:none;
@@ -56,7 +56,7 @@ const Button = styled.button`
 `
 const Agreement = styled.div`
 font-size:12px;
-margin-bottom:20px;
+margin-bottom:10px;
 line-height:1.5;
 `
 const Link = styled.span`
@@ -89,7 +89,7 @@ interface IFormFields {
 }
 
 const Registr = () => {
-    const { isAuth } = useAppSelector(state => state.auth)
+    const { isAuth, registrError } = useAppSelector(state => state.auth)
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -98,7 +98,7 @@ const Registr = () => {
 
     const onSubmit: SubmitHandler<IFormFields> = (data) => {
         dispatch(registration({ email: data.email, password: data.password, username: data.username }))
-            reset()
+        reset()
     }
 
     useEffect(() => {
@@ -137,6 +137,7 @@ const Registr = () => {
                                 By creating an account, I consent to the processing of my personal
                                 data in accordance with the PRIVACY POLICY.
                             </Agreement>
+                            {registrError && <Error>{registrError}</Error>}
                             <Button type="submit"
                                 disabled={!isValid || !isDirty || isSubmitting}>
                                 CREATE

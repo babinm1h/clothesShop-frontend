@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from "styled-components"
 import SearchIcon from '@mui/icons-material/Search';
 import { Badge } from '@mui/material';
@@ -85,6 +85,10 @@ const Navbar = () => {
         dispatch(logout())
     }
 
+    useEffect(() => {
+
+    }, [isAuth])
+
     return (
         <>
             <Container>
@@ -106,18 +110,18 @@ const Navbar = () => {
                             ? <>
                                 <MenuItem>{user?.email}</MenuItem>
                                 <MenuItem onClick={handleLogout}>LOGOUT</MenuItem>
+                                <MenuItem>
+                                    <NavLink to={AllRoutes.CART}>
+                                        <Badge badgeContent={totalCount} color="primary">
+                                            <CartIcon><ShoppingCartIcon fontSize="medium" /></CartIcon>
+                                        </Badge>
+                                    </NavLink>
+                                </MenuItem>
                             </>
                             : <>
                                 <NavLink to={AllRoutes.SIGNIN}><MenuItem>SIGN IN </MenuItem></NavLink>
                                 <NavLink to={AllRoutes.REGISTER}><MenuItem>SIGN UP</MenuItem></NavLink>
                             </>}
-                        <MenuItem>
-                            <NavLink to={AllRoutes.CART}>
-                                <Badge badgeContent={totalCount} color="primary">
-                                    <CartIcon><ShoppingCartIcon fontSize="medium" /></CartIcon>
-                                </Badge>
-                            </NavLink>
-                        </MenuItem>
                     </Right>
                 </Wrapper>
             </Container>
