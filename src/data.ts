@@ -91,7 +91,7 @@ export const usefulLinks = [
 
 
 export const allColors = [
-    "red", "green", "blue", "black", "white", "yellow", "orange", "pink", "brown", "gray"
+    "red", "green", "blue", "black", "white", "yellow", "orange", "pink", "brown", "gray", "coral"
 ]
 
 

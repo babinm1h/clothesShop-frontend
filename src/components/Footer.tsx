@@ -7,7 +7,7 @@ import EmailIcon from '@mui/icons-material/Email';
 import PhoneIcon from '@mui/icons-material/Phone';
 import RoomIcon from '@mui/icons-material/Room';
 import { usefulLinks } from '../data';
-import { mobile } from '../utils/responsive';
+import { bigMobile, mobile } from '../utils/responsive';
 
 
 interface SocialIconProps {
@@ -17,7 +17,7 @@ interface SocialIconProps {
 const Container = styled.div`
    display:flex;
     padding:20px 0;  
-    ${mobile({ flexDirection: `column` })}       
+    ${bigMobile({ flexDirection: `column` })}       
 `
 const Left = styled.div`
   flex:1; 
@@ -51,7 +51,7 @@ const SocialIcon = styled.div<SocialIconProps>`
 const Center = styled.div`
    flex:1;
    padding:20px;
-   ${mobile({ display: `none` })}
+   ${bigMobile({ display: `none` })}
 `
 const Title = styled.h3`
     font-size:20px;

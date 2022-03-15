@@ -4,7 +4,7 @@ import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import { sliderItems } from '../data';
 import { NavLink } from 'react-router-dom';
-import { mobile } from '../utils/responsive';
+import { bigMobile, mobile } from '../utils/responsive';
 import { AllRoutes } from '../utils/routes';
 
 interface ArrowProps {
@@ -21,7 +21,7 @@ const Container = styled.div`
     display:flex;
     position:relative;
     overflow:hidden;
-    ${mobile({ display: `none` })}
+    ${bigMobile({ display: `none` })}
 `
 
 const Arrow = styled.div<ArrowProps>`

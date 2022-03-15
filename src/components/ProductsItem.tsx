@@ -3,7 +3,7 @@ import styled from "styled-components"
 import SearchIcon from '@mui/icons-material/Search';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { mobile } from '../utils/responsive';
+import { bigMobile, mobile, tablet } from '../utils/responsive';
 import { NavLink } from 'react-router-dom';
 import { AllRoutes } from '../utils/routes';
 import { IProduct } from '../types/models';
@@ -37,15 +37,16 @@ const Info = styled.div`
    cursor:pointer;
 `
 const Container = styled.div`
+   flex:30%;
    margin:5px;
-   flex:0 0 300px;
    height:350px; 
    display:flex;
    align-items:center;
    justify-content:center;
    background-color:#f5fbfd;
    position:relative;
-   ${mobile({ flex: `100%` })}
+   ${bigMobile({ flex: `100%` })}
+   ${tablet({ flex: `50%`, })}
    &:hover ${Info}{
     opacity:1;
    }

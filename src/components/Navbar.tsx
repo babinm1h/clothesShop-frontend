@@ -3,7 +3,7 @@ import styled from "styled-components"
 import SearchIcon from '@mui/icons-material/Search';
 import { Badge } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { mobile } from '../utils/responsive';
+import { bigMobile, mobile } from '../utils/responsive';
 import { NavLink } from 'react-router-dom';
 import { AllRoutes } from '../utils/routes';
 import { useAppSelector } from '../hooks/reduxHooks';
@@ -38,6 +38,7 @@ align-items:center;
 margin-left:25px;
 padding:2px 5px;
 border:1px solid rgba(0,0,0, 0.1);
+${bigMobile({ display: "none" })}
 `
 const Input = styled.input`
     border:none;

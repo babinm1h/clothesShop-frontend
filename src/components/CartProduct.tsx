@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import styled from "styled-components"
-import { mobile } from '../utils/responsive';
+import { bigMobile, mobile } from '../utils/responsive';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
 import { ICartProduct } from '../types/models';
@@ -18,7 +18,7 @@ display:flex;
 justify-content:space-between;
 margin-bottom:50px;
 padding:20px;
-${mobile({ flexDirection: `column` })}
+${bigMobile({ flexDirection: `column`, flex: "100%" })}
 `
 const ProductDetail = styled.div`
 display:flex;
@@ -31,6 +31,7 @@ flex-direction:column;
 justify-content:center;
 align-items:center;
 font-size:18px;
+${bigMobile({ marginBottom: `20px` })}
 `
 const Details = styled.div`
     padding:20px;
@@ -38,12 +39,13 @@ const Details = styled.div`
     flex-direction:column;
     justify-content:space-around;
     font-size:16px;
+    ${bigMobile({ justifyContent: `flex-start`, padding: `20px 0` })}
 `
 const ProductName = styled.h2`
-
+margin-bottom:10px;
 `
 const ProductId = styled.div`
-
+margin-bottom:10px;
 `
 const ProductColor = styled.div<ProductColorProps>`
 background-color:${props => props.color};
@@ -51,6 +53,7 @@ width:20px;
 height:20px;
 border-radius:50%;
 border:1px solid black;
+margin-bottom:10px;
 `
 const ProductSize = styled.div`
 
@@ -89,7 +92,9 @@ const CartProduct: FC<ICartProductProps> = ({ item }) => {
     const { isAdding, isRemoving, } = useAppSelector(state => state.cart)
 
     const handleRemove = () => {
-        dispatch(deleteCartProduct(item._id))
+        if (window.confirm("Do you want to remove this product from cart?")) {
+            dispatch(deleteCartProduct(item._id))
+        }
     }
 
     const handleAddOne = () => {

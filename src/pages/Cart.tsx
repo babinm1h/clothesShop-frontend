@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from "styled-components"
 import Navbar from '../components/Navbar';
-import { mobile } from '../utils/responsive';
+import { bigMobile, mobile, tablet } from '../utils/responsive';
 import { useDispatch } from 'react-redux';
 import { getCart } from '../store/actions/cart';
 import { useAppSelector } from '../hooks/reduxHooks';
@@ -49,7 +49,7 @@ const TopButton = styled.button<TopButtonProps>`
 const TopTexts = styled.div`
 display:flex;
 align-items:center;
-${mobile({ display: `none` })}
+${bigMobile({ display: `none` })}
 `
 const TopText = styled.div`
 font-size:16px;
@@ -58,7 +58,7 @@ margin-right:20px;
 const Bottom = styled.div`
 display:flex;
 justify-content:space-between;
-${mobile({ flexDirection: `column` })}
+${tablet({ flexDirection: `column` })}
 `
 const Info = styled.div`
 flex:3;
@@ -66,8 +66,7 @@ flex:3;
 
 const Summary = styled.div`
 flex:1;
-
-height:30vh;
+height:50vh;
 border:1px solid rgba(0,0,0,0.2);
 padding:20px;
 border-radius:11px;
@@ -146,7 +145,7 @@ const Cart = () => {
                         CONTINUE SHOPPING
                     </TopButton>
                     <TopTexts>
-                        <TopText>Shopping Cart (2)</TopText>
+                        <TopText>Shopping Cart ({totalCount})</TopText>
                         <TopText>Your Wishlist (0)</TopText>
                     </TopTexts>
                     <TopButton bg="black" color="white">CHECKOUT NOW</TopButton>

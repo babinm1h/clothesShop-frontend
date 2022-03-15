@@ -4,7 +4,7 @@ import NewsLetter from '../components/NewsLetter';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import Navbar from '../components/Navbar';
-import { mobile } from '../utils/responsive';
+import { mobile, tablet } from '../utils/responsive';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../hooks/reduxHooks';
 import { fetchOneProduct } from '../store/actions/productPage';
@@ -33,7 +33,8 @@ const Image = styled.img`
     width:100%;
     height:90vh;
     object-fit:cover;
-    ${mobile({ height: `40vh` })}
+    ${tablet({ height: `250px`, width: `100%`, objectFit: 'contain' })}
+    
 `
 const InfoContainer = styled.div`
     flex:1;
@@ -90,7 +91,7 @@ const AddContainer = styled.div`
    display:flex;
    align-items:center;
    justify-content:space-between;
-   ${mobile({ width: `100%` })}
+   ${tablet({ width: `100%` })}
 `
 const AmountContainer = styled.div`
     display:flex;
@@ -112,6 +113,7 @@ const Button = styled.button`
     border:1px solid teal;
     padding:10px 15px;
     font-weight:500;
+    white-space:nowrap;
     &:hover{
         text-decoration:underline;
     }
